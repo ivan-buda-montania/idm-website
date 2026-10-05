@@ -1,0 +1,31 @@
+# IDM Internacional
+
+> IDM Internacional is a specialized distributor and integrator of pharmaceutical machinery and laboratory equipment for the healthcare and food sectors. Based in Mexico City, in business since 1999, serving Canada, the United States, Mexico, Colombia, Brazil, Chile, and Spain. GMP, FDA, and ISO compliant equipment.
+
+The site is bilingual (English and Spanish). Every page is also available as Markdown: send `Accept: text/markdown` or append `?format=md` (add `&lang=es` for Spanish).
+
+## Pages
+
+- [Home](https://idminternacional.com/?format=md): Company overview, industries, markets served, and contact details
+- [Machinery catalog](https://idminternacional.com/machinery?format=md): All equipment with short descriptions
+- [Full catalog in one file](https://idminternacional.com/llms-full.txt): Every product with features and technical specifications
+
+## Equipment categories
+
+- Fillers and peristaltic fillers, vial filling and capping, capping and sealing
+- Reactors, conveyor belts
+- Pharma and food freeze dryers
+- CO2 incubators, quality control equipment
+
+Individual products: `https://idminternacional.com/products?id=<product-id>&format=md`. Product ids are listed in llms-full.txt.
+
+## Contact
+
+- Phone / WhatsApp: +52 55 1693 7705
+- Email: idminternacional@gmail.com
+- Location: Mexico City, Mexico
+- Response within 24 business hours
+
+## Optional
+
+- [Product data (JSON)](https://idminternacional.com/data/catalog.json): Machine-readable catalog, Spanish and English

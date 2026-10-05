@@ -51,7 +51,7 @@ export class IdmWebsiteStack extends Stack {
     // Any path whose last segment has no file extension is served index.html.
     const spaRewrite = new cloudfront.Function(this, 'SpaRewrite', {
       runtime: cloudfront.FunctionRuntime.JS_2_0,
-      comment: 'Redirect www to the apex domain and serve index.html for client-side routes',
+      comment: 'Redirect www to the apex domain, serve Markdown on request, and serve index.html for client-side routes',
       code: cloudfront.FunctionCode.fromInline(`
 function handler(event) {
   var request = event.request;
@@ -69,6 +69,24 @@ function handler(event) {
   }
   var last = request.uri.split('/').pop();
   if (last.indexOf('.') === -1) {
+    // Markdown content negotiation: "Accept: text/markdown" or "?format=md" gets the build-time Markdown twin
+    // of the page (see vite-plugins/ai-content.js). Spanish with "lang=es", English otherwise.
+    var accept = request.headers.accept ? request.headers.accept.value : '';
+    var qs = request.querystring;
+    if (accept.indexOf('text/markdown') !== -1 || (qs.format && qs.format.value === 'md')) {
+      var lang = qs.lang && qs.lang.value === 'es' ? 'es' : 'en';
+      var route = request.uri;
+      if (route.length > 1 && route.charAt(route.length - 1) === '/') route = route.slice(0, -1);
+      var id = qs.id ? qs.id.value : '';
+      var md = null;
+      if (route === '/') md = 'index';
+      else if (route === '/machinery') md = 'machinery';
+      else if (route === '/products' && /^[a-z0-9-]+$/.test(id)) md = 'products/' + id;
+      if (md) {
+        request.uri = '/md/' + lang + '/' + md + '.md';
+        return request;
+      }
+    }
     request.uri = '/index.html';
   }
   return request;

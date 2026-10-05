@@ -3,6 +3,7 @@ import { LanguageProvider } from './context/LanguageContext.jsx';
 import { CatalogProvider } from './context/CatalogContext.jsx';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import AILayout from './components/AILayout';
 import WhatsAppButton from './components/WhatsAppButton';
 import HomePage from './pages/HomePage';
 import MachineryPage from './pages/MachineryPage';
@@ -13,9 +14,9 @@ function PublicLayout() {
     <LanguageProvider>
       <CatalogProvider>
         <Navbar />
-        <main>
+        <AILayout>
           <Outlet />
-        </main>
+        </AILayout>
         <Footer />
         <WhatsAppButton />
       </CatalogProvider>

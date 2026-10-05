@@ -3,7 +3,8 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { useLanguage } from '../context/languageContext';
 import { useCatalog } from '../context/catalogContext';
 import { localize, TAG_KEYS } from '../lib/catalog';
-import { PHONE, EMAIL } from '../data/contact';
+import SchemaInjector from '../components/SchemaInjector';
+import { PHONE, EMAIL, SITE_URL, SITE_NAME } from '../data/contact';
 
 export default function ProductDetailPage() {
   const { t, lang } = useLanguage();
@@ -51,6 +52,17 @@ export default function ProductDetailPage() {
 
   return (
     <>
+      <SchemaInjector
+        type="Product"
+        data={{
+          name: product.name,
+          description: product.lead,
+          url: `${SITE_URL}/products?id=${product.id}`,
+          ...(product.image && { image: new URL(product.image, SITE_URL).href }),
+          brand: { '@type': 'Brand', name: SITE_NAME },
+          offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: `${SITE_URL}/products?id=${product.id}`, seller: { '@type': 'Organization', name: SITE_NAME } },
+        }}
+      />
       {/* Breadcrumb */}
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '1.2rem 3rem 0', display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.85rem', color: 'var(--muted)' }}>
         <Link to="/" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>{t('breadcrumb.home')}</Link>
